@@ -1,6 +1,6 @@
 /**
  * audio-streamer Worker
- * Proxies requests from audio.storyshorts.co/* → R2 bucket
+ * Proxies requests from audio.storyshorts.co/* → R2 bucket (bound directly, no S3 auth needed)
  * Adds CORS headers for browser playback
  */
 
@@ -15,57 +15,59 @@ export default {
       return new Response("Not Found", { status: 404 });
     }
 
-    // Build the R2 public URL for this object
-    // R2 serves objects at: https://{account_id}.r2.cloudflarestorage.com/{key}
-    const r2Url = `https://${env.R2_ACCOUNT_ID}.r2.cloudflarestorage.com/${key}`;
-
-    // Fetch the object from R2
-    let response;
+    // Fetch the object directly from the bound R2 bucket (no auth needed)
+    let object;
     try {
-      response = await fetch(r2Url, {
-        headers: {
-          "Range": request.headers.get("Range") || "",
-        },
-      });
+      object = await env.AUDIO_BUCKET.get(key);
     } catch (err) {
-      return new Response("Upstream fetch failed", { status: 502 });
+      return new Response("R2 fetch failed: " + err.message, { status: 502 });
     }
 
-    if (response.status === 404) {
-      return new Response("File not found", { status: 404 });
+    if (!object) {
+      return new Response("File not found in R2: " + key, { status: 404 });
     }
 
-    if (response.status === 403) {
-      return new Response("Access denied — bucket may not be public", { status: 403 });
+    // Determine content type from extension
+    let contentType = object.httpMetadata?.contentType;
+    if (!contentType) {
+      if (key.endsWith(".mp3")) contentType = "audio/mpeg";
+      else if (key.endsWith(".txt")) contentType = "text/plain; charset=utf-8";
+      else if (key.endsWith(".json")) contentType = "application/json";
+      else contentType = "application/octet-stream";
     }
 
     // Stream the response back with CORS headers
-    const newHeaders = new Headers(response.headers);
+    const headers = new Headers({
+      "Content-Type": contentType,
+      "Access-Control-Allow-Origin": "*",
+      "Access-Control-Allow-Methods": "GET, HEAD, OPTIONS",
+      "Access-Control-Max-Age": "86400",
+      "Cache-Control": "public, max-age=31536000, immutable",
+    });
 
-    // CORS — allow browser audio playback
-    newHeaders.set("Access-Control-Allow-Origin", "*");
-    newHeaders.set("Access-Control-Allow-Methods", "GET, HEAD, OPTIONS");
-    newHeaders.set("Access-Control-Max-Age", "86400");
-
-    // Content-Type defaults to octet-stream if not set
-    // The browser needs correct MIME type for audio
-    if (!newHeaders.has("Content-Type")) {
-      // Infer from extension
-      if (key.endsWith(".mp3")) {
-        newHeaders.set("Content-Type", "audio/mpeg");
-      } else if (key.endsWith(".txt")) {
-        newHeaders.set("Content-Type", "text/plain; charset=utf-8");
-      } else if (key.endsWith(".json")) {
-        newHeaders.set("Content-Type", "application/json");
+    // Handle Range requests for audio seeking
+    const rangeHeader = request.headers.get("Range");
+    if (rangeHeader) {
+      const rangeMatch = rangeHeader.match(/bytes=(\d+)-(\d*)/);
+      if (rangeMatch) {
+        const start = parseInt(rangeMatch[1], 10);
+        const end = rangeMatch[2] ? parseInt(rangeMatch[2], 10) : object.size - 1;
+        const chunkSize = end - start + 1;
+        return new Response(object.body, {
+          status: 206,
+          headers: {
+            ...Object.fromEntries(headers),
+            "Content-Range": `bytes ${start}-${end}/${object.size}`,
+            "Content-Length": String(chunkSize),
+            "Accept-Ranges": "bytes",
+          },
+        });
       }
     }
 
-    // Prevent caching of dynamic audio content
-    newHeaders.set("Cache-Control", "public, max-age=31536000, immutable");
-
-    return new Response(response.body, {
-      status: response.status,
-      headers: newHeaders,
+    return new Response(object.body, {
+      status: 200,
+      headers,
     });
   },
 };
