@@ -1,0 +1,7 @@
+{
+  "name": "storyshorts-audio-streamer",
+  "version": "1.0.0",
+  "description": "Cloudflare Worker to stream audio from R2 bucket via audio.storyshorts.co",
+  "main": "src/index.js",
+  "private": true
+}
