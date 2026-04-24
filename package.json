@@ -1,7 +1,50 @@
 {
-  "name": "storyshorts-audio-streamer",
-  "version": "1.0.0",
-  "description": "Cloudflare Worker to stream audio from R2 bucket via audio.storyshorts.co",
+  "name": "storyshorts",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "StoryShorts MVP with Next.js frontend and Cloudflare audio worker",
   "main": "src/index.js",
-  "private": true
+  "scripts": {
+    "build": "prisma generate && next build",
+    "dev": "next dev",
+    "start": "next start",
+    "lint": "eslint .",
+    "typecheck": "tsc --noEmit",
+    "postinstall": "prisma generate",
+    "db:generate": "prisma generate",
+    "db:push": "prisma db push",
+    "db:migrate": "prisma migrate dev",
+    "db:seed": "prisma db seed",
+    "worker:dev": "wrangler dev",
+    "worker:deploy": "wrangler deploy",
+    "preview": "opennextjs-cloudflare build && opennextjs-cloudflare preview",
+    "deploy": "opennextjs-cloudflare build && opennextjs-cloudflare deploy",
+    "upload": "opennextjs-cloudflare build && opennextjs-cloudflare upload",
+    "cf-typegen": "wrangler types --env-interface CloudflareEnv cloudflare-env.d.ts"
+  },
+  "prisma": {
+    "seed": "tsx prisma/seed.ts"
+  },
+  "dependencies": {
+    "@clerk/nextjs": "^6.17.2",
+    "@prisma/client": "^6.6.0",
+    "@stripe/stripe-js": "^4.10.0",
+    "next": "^15.3.1",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
+    "stripe": "^18.5.0"
+  },
+  "devDependencies": {
+    "@opennextjs/cloudflare": "^1.19.1",
+    "@types/node": "^22.14.1",
+    "@types/react": "^19.0.12",
+    "@types/react-dom": "^19.0.4",
+    "eslint": "^9.24.0",
+    "eslint-config-next": "^15.3.1",
+    "prisma": "^6.6.0",
+    "tsx": "^4.19.3",
+    "typescript": "^5.8.3",
+    "wrangler": "^4.83.0"
+  }
 }

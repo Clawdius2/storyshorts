@@ -2,10 +2,10 @@ name = "audio-streamer"
 main = "src/index.js"
 compatibility_date = "2024-04-19"
 
+[[r2_buckets]]
+binding = "AUDIO_BUCKET"
+bucket_name = "shortshorts-audio-prod"
+
 [vars]
 R2_ACCOUNT_ID = "dfd11ff2f8b18eab632465275938c6ac"
 R2_BUCKET = "shortshorts-audio-prod"
-
-# CF_API_TOKEN is set as a secret via:
-# wrangler secret put CF_API_TOKEN --name audio-streamer
-# Value: your Cloudflare API token (cfut_...)

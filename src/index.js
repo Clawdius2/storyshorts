@@ -1,73 +1,58 @@
 /**
- * audio-streamer Worker
- * Proxies requests from audio.storyshorts.co/* → R2 bucket (bound directly, no S3 auth needed)
- * Adds CORS headers for browser playback
+ * audio-streamer Worker — uses R2 binding directly (no REST API)
+ * R2 bucket is bound as AUDIO_BUCKET in wrangler.audio.toml
  */
-
-export default {
+class AudioStreamer {
   async fetch(request, env) {
     const url = new URL(request.url);
-
-    // Strip the leading slash from the path to get the R2 key
     const key = url.pathname.slice(1);
 
     if (!key) {
       return new Response("Not Found", { status: 404 });
     }
 
-    // Fetch the object directly from the bound R2 bucket (no auth needed)
-    let object;
+    let contentType = "audio/mpeg";
+    if (key.endsWith(".wav")) contentType = "audio/wav";
+    else if (key.endsWith(".mp3")) contentType = "audio/mpeg";
+    else if (key.endsWith(".jpg") || key.endsWith(".jpeg")) contentType = "image/jpeg";
+    else if (key.endsWith(".png")) contentType = "image/png";
+
     try {
-      object = await env.AUDIO_BUCKET.get(key);
-    } catch (err) {
-      return new Response("R2 fetch failed: " + err.message, { status: 502 });
-    }
+      const rangeHeader = request.headers.get("Range");
+      const options = {};
 
-    if (!object) {
-      return new Response("File not found in R2: " + key, { status: 404 });
-    }
-
-    // Determine content type from extension
-    let contentType = object.httpMetadata?.contentType;
-    if (!contentType) {
-      if (key.endsWith(".mp3")) contentType = "audio/mpeg";
-      else if (key.endsWith(".txt")) contentType = "text/plain; charset=utf-8";
-      else if (key.endsWith(".json")) contentType = "application/json";
-      else contentType = "application/octet-stream";
-    }
-
-    // Stream the response back with CORS headers
-    const headers = new Headers({
-      "Content-Type": contentType,
-      "Access-Control-Allow-Origin": "*",
-      "Access-Control-Allow-Methods": "GET, HEAD, OPTIONS",
-      "Access-Control-Max-Age": "86400",
-      "Cache-Control": "public, max-age=31536000, immutable",
-    });
-
-    // Handle Range requests for audio seeking
-    const rangeHeader = request.headers.get("Range");
-    if (rangeHeader) {
-      const rangeMatch = rangeHeader.match(/bytes=(\d+)-(\d*)/);
-      if (rangeMatch) {
-        const start = parseInt(rangeMatch[1], 10);
-        const end = rangeMatch[2] ? parseInt(rangeMatch[2], 10) : object.size - 1;
-        const chunkSize = end - start + 1;
-        return new Response(object.body, {
-          status: 206,
-          headers: {
-            ...Object.fromEntries(headers),
-            "Content-Range": `bytes ${start}-${end}/${object.size}`,
-            "Content-Length": String(chunkSize),
-            "Accept-Ranges": "bytes",
-          },
-        });
+      if (rangeHeader) {
+        options.range = rangeHeader;
       }
-    }
 
-    return new Response(object.body, {
-      status: 200,
-      headers,
-    });
-  },
-};
+      const object = await env.AUDIO_BUCKET.get(key, options);
+
+      if (!object) {
+        return new Response(`Not found: ${key}`, { status: 404 });
+      }
+
+      const headers = new Headers();
+      headers.set("Content-Type", contentType);
+      headers.set("Access-Control-Allow-Origin", "*");
+      headers.set("Access-Control-Allow-Methods", "GET, HEAD, OPTIONS");
+      headers.set("Access-Control-Max-Age", "86400");
+      headers.set("Accept-Ranges", "bytes");
+      headers.set("Cache-Control", "public, max-age=31536000, immutable");
+
+      if (rangeHeader && object.range) {
+        const cfRange = object.range;
+        headers.set("Content-Range", `bytes ${cfRange.start}-${cfRange.end}/${object.size}`);
+        headers.set("Content-Length", String(cfRange.end - cfRange.start + 1));
+        return new Response(object.body, { status: 206, headers });
+      }
+
+      headers.set("Content-Length", String(object.size));
+      return new Response(object.body, { headers });
+
+    } catch (err) {
+      return new Response(`Worker error: ${err.message}`, { status: 502 });
+    }
+  }
+}
+
+export default new AudioStreamer();

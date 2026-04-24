@@ -1,0 +1,75 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id                String              @id @default(cuid())
+  clerkUserId       String              @unique
+  createdAt         DateTime            @default(now())
+  updatedAt         DateTime            @updatedAt
+  subscription      Subscription?
+  listeningProgress ListeningProgress[]
+}
+
+model Subscription {
+  id                   String   @id @default(cuid())
+  userId               String   @unique
+  stripeCustomerId     String   @unique
+  stripeSubscriptionId String   @unique
+  status               String
+  currentPeriodEnd     DateTime?
+  createdAt            DateTime @default(now())
+  updatedAt            DateTime @updatedAt
+  user                 User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model Book {
+  id                  String              @id @default(cuid())
+  gutenbergId         String?             @unique
+  title               String
+  author              String
+  narrator            String
+  genre               String
+  description         String
+  durationSeconds     Int
+  coverImageKey       String
+  audioKey            String              // R2 object key, e.g. books/{gutenberg_id}/audio/{author}.{title}.mp3
+  isFree              Boolean             @default(false)
+  // Pipeline metadata
+  rawTextObjectKey    String?
+  cleanTextObjectKey  String?
+  finalAudioObjectKey String?
+  publicAudioUrl      String?
+  status              String              @default("pending")  // pending|processing|ready|failed
+  failureReason       String?
+  // Playback metadata
+  byteSize            Int?
+  createdAt           DateTime            @default(now())
+  updatedAt           DateTime            @updatedAt
+  listeningProgress   ListeningProgress[]
+
+  @@index([isFree])
+  @@index([genre])
+  @@index([title])
+  @@index([gutenbergId])
+  @@index([status])
+}
+
+model ListeningProgress {
+  id              String   @id @default(cuid())
+  userId          String
+  bookId          String
+  progressSeconds Int      @default(0)
+  updatedAt       DateTime @updatedAt
+  createdAt       DateTime @default(now())
+  book            Book     @relation(fields: [bookId], references: [id], onDelete: Cascade)
+  user            User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, bookId])
+  @@index([bookId])
+}

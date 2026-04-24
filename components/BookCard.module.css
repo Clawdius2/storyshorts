@@ -1,0 +1,65 @@
+.card {
+  display: grid;
+  gap: 16px;
+  padding: 16px;
+  background: rgba(18, 26, 38, 0.88);
+  border: 1px solid var(--border);
+  border-radius: 26px;
+  box-shadow: var(--shadow);
+}
+
+.coverLink {
+  display: block;
+}
+
+.body {
+  display: grid;
+  gap: 14px;
+}
+
+.metaRow {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  color: var(--secondary);
+  font-size: 0.84rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.copy {
+  display: grid;
+  gap: 10px;
+}
+
+.copy h3 {
+  font-size: 1.3rem;
+}
+
+.byline,
+.description {
+  margin: 0;
+  color: var(--secondary);
+  line-height: 1.6;
+}
+
+.description {
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+}
+
+.freeBadge {
+  color: var(--highlight);
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  font-size: 0.76rem;
+}

@@ -1,0 +1,53 @@
+.page {
+  display: grid;
+}
+
+.card {
+  display: grid;
+  gap: 18px;
+  padding: 24px;
+  background: rgba(18, 26, 38, 0.88);
+  border: 1px solid var(--border);
+  border-radius: 28px;
+  box-shadow: var(--shadow);
+}
+
+.copy {
+  margin: 0;
+  color: var(--secondary);
+  line-height: 1.8;
+  max-width: 42rem;
+}
+
+.benefits {
+  display: grid;
+  gap: 12px;
+}
+
+.benefits div {
+  padding: 18px;
+  border-radius: 22px;
+  background: rgba(255, 255, 255, 0.03);
+}
+
+.benefits p {
+  margin: 8px 0 0;
+  color: var(--secondary);
+  line-height: 1.7;
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+@media (min-width: 900px) {
+  .card {
+    padding: 36px;
+  }
+
+  .benefits {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}

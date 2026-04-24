@@ -1,0 +1,29 @@
+.row {
+  display: flex;
+  gap: 10px;
+  overflow-x: auto;
+  padding-bottom: 2px;
+  scrollbar-width: none;
+}
+
+.row::-webkit-scrollbar {
+  display: none;
+}
+
+.chip {
+  white-space: nowrap;
+  min-height: 40px;
+  padding: 0 16px;
+  border-radius: 999px;
+  border: 1px solid var(--border);
+  background: rgba(255, 255, 255, 0.03);
+  color: var(--secondary);
+  display: inline-flex;
+  align-items: center;
+}
+
+.active {
+  color: white;
+  background: rgba(74, 144, 226, 0.18);
+  border-color: rgba(74, 144, 226, 0.36);
+}

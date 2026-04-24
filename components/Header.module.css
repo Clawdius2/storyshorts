@@ -1,0 +1,80 @@
+.header {
+  position: sticky;
+  top: 0;
+  z-index: 30;
+  padding: 16px;
+  background: linear-gradient(180deg, rgba(11, 16, 24, 0.92), rgba(11, 16, 24, 0.55));
+  backdrop-filter: blur(18px);
+}
+
+.inner {
+  width: min(100%, var(--max-width));
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  justify-content: space-between;
+}
+
+.brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  min-width: 0;
+}
+
+.brand span:last-child {
+  display: grid;
+}
+
+.brand strong {
+  font-family: var(--font-heading), sans-serif;
+  font-size: 1rem;
+}
+
+.brand small {
+  color: var(--secondary);
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+}
+
+.brandMark {
+  width: 42px;
+  height: 42px;
+  border-radius: 14px;
+  background: linear-gradient(135deg, rgba(74, 144, 226, 0.9), rgba(227, 179, 65, 0.42));
+  color: #fff;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-heading), sans-serif;
+  letter-spacing: 0.08em;
+}
+
+.nav {
+  display: none;
+  align-items: center;
+  gap: 22px;
+  color: var(--secondary);
+}
+
+.nav a:hover {
+  color: var(--text);
+}
+
+.actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+@media (min-width: 820px) {
+  .header {
+    padding: 18px 24px;
+  }
+
+  .nav {
+    display: inline-flex;
+  }
+}

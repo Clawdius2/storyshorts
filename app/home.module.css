@@ -1,0 +1,97 @@
+.hero {
+  display: grid;
+  gap: 18px;
+}
+
+.heroCard,
+.heroStats,
+.previewSection {
+  padding: 24px;
+  background: rgba(18, 26, 38, 0.86);
+  border: 1px solid var(--border);
+  border-radius: 28px;
+  box-shadow: var(--shadow);
+}
+
+.heroCard {
+  display: grid;
+  gap: 18px;
+}
+
+.heroCopy {
+  margin: 0;
+  max-width: 42rem;
+  color: var(--secondary);
+  line-height: 1.8;
+}
+
+.heroActions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.heroStats {
+  display: grid;
+  gap: 12px;
+}
+
+.statCard {
+  padding: 18px;
+  border-radius: 22px;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.statCard span {
+  display: block;
+  margin-bottom: 8px;
+  color: var(--secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-size: 0.78rem;
+}
+
+.statCard strong {
+  font-family: var(--font-heading), sans-serif;
+  font-size: 1rem;
+}
+
+.previewSection {
+  display: grid;
+  gap: 20px;
+}
+
+.sectionHeading {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 16px;
+  align-items: end;
+}
+
+.grid {
+  display: grid;
+  gap: 16px;
+}
+
+@media (min-width: 900px) {
+  .hero {
+    grid-template-columns: minmax(0, 1.35fr) minmax(320px, 0.8fr);
+  }
+
+  .heroCard {
+    padding: 48px;
+  }
+
+  .heroStats,
+  .previewSection {
+    padding: 28px;
+  }
+}
+
+@media (min-width: 1120px) {
+  .grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}

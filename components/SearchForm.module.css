@@ -1,0 +1,24 @@
+.form {
+  display: grid;
+  gap: 12px;
+}
+
+.input {
+  min-height: 48px;
+  width: 100%;
+  padding: 0 16px;
+  border-radius: 16px;
+  border: 1px solid var(--border);
+  background: rgba(255, 255, 255, 0.03);
+  color: var(--text);
+}
+
+.input::placeholder {
+  color: rgba(138, 149, 165, 0.8);
+}
+
+@media (min-width: 640px) {
+  .form {
+    grid-template-columns: minmax(0, 1fr) auto;
+  }
+}
