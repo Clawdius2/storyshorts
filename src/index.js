@@ -1,6 +1,8 @@
 /**
  * audio-streamer Worker — uses R2 binding directly (no REST API)
  * R2 bucket is bound as AUDIO_BUCKET in wrangler.audio.toml
+ * GET  — stream audio from R2
+ * PUT   — upload audio to R2 (for audiobook production pipeline)
  */
 class AudioStreamer {
   async fetch(request, env) {
@@ -9,6 +11,32 @@ class AudioStreamer {
 
     if (!key) {
       return new Response("Not Found", { status: 404 });
+    }
+
+    // PUT — upload to R2
+    if (request.method === "PUT") {
+      try {
+        const contentType = request.headers.get("Content-Type") || "audio/mpeg";
+        const body = await request.arrayBuffer();
+        
+        // Put the object directly via the R2 binding
+        const object = await env.AUDIO_BUCKET.put(key, body, {
+          httpMetadata: { contentType },
+          customMetadata: { uploadedAt: new Date().toISOString() }
+        });
+
+        return new Response(JSON.stringify({ success: true, key, size: object.size }), {
+          status: 200,
+          headers: { "Content-Type": "application/json" }
+        });
+      } catch (err) {
+        return new Response(`Upload error: ${err.message}`, { status: 500 });
+      }
+    }
+
+    // GET — stream from R2
+    if (request.method !== "GET" && request.method !== "HEAD" && request.method !== "OPTIONS") {
+      return new Response("Method Not Allowed", { status: 405 });
     }
 
     let contentType = "audio/mpeg";
@@ -49,7 +77,7 @@ class AudioStreamer {
       const headers = new Headers();
       headers.set("Content-Type", contentType);
       headers.set("Access-Control-Allow-Origin", "*");
-      headers.set("Access-Control-Allow-Methods", "GET, HEAD, OPTIONS");
+      headers.set("Access-Control-Allow-Methods", "GET, HEAD, PUT, OPTIONS");
       headers.set("Access-Control-Max-Age", "86400");
       headers.set("Cache-Control", "public, max-age=31536000, immutable");
 
