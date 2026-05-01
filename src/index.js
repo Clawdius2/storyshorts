@@ -17,23 +17,30 @@ class AudioStreamer {
     else if (key.endsWith(".jpg") || key.endsWith(".jpeg")) contentType = "image/jpeg";
     else if (key.endsWith(".png")) contentType = "image/png";
 
-    try {
-      const rangeHeader = request.headers.get("Range");
-      const options = {};
+    const rangeHeader = request.headers.get("Range");
+    const rangeMatch = rangeHeader ? rangeHeader.match(/^bytes=(\d+)-(\d+)$/) : null;
 
-      if (rangeHeader) {
-        // Parse "bytes=0-99" into { start: 0, end: 99 }
-        const rangeMatch = rangeHeader.match(/^bytes=(\d+)-(\d+)$/);
-        if (rangeMatch) {
-          options.range = {
-            start: parseInt(rangeMatch[1], 10),
-            end: parseInt(rangeMatch[2], 10),
-          };
+    try {
+      let object;
+      let usedRange = false;
+
+      // Try with range first if valid Range header
+      if (rangeMatch) {
+        try {
+          object = await env.AUDIO_BUCKET.get(key, {
+            range: { start: parseInt(rangeMatch[1]), end: parseInt(rangeMatch[2]) },
+          });
+          usedRange = !!object.range;
+        } catch (rangeErr) {
+          // Range failed — fall through to try full object
+          object = null;
         }
-        // If malformed range, omit range param — R2 will return full object
       }
 
-      const object = await env.AUDIO_BUCKET.get(key, options);
+      // Fall back to full object if range didn't work or wasn't attempted
+      if (!object) {
+        object = await env.AUDIO_BUCKET.get(key);
+      }
 
       if (!object) {
         return new Response(`Not found: ${key}`, { status: 404 });
@@ -44,10 +51,9 @@ class AudioStreamer {
       headers.set("Access-Control-Allow-Origin", "*");
       headers.set("Access-Control-Allow-Methods", "GET, HEAD, OPTIONS");
       headers.set("Access-Control-Max-Age", "86400");
-      headers.set("Accept-Ranges", "bytes");
       headers.set("Cache-Control", "public, max-age=31536000, immutable");
 
-      if (rangeHeader && object.range) {
+      if (usedRange && object.range) {
         const cfRange = object.range;
         headers.set("Content-Range", `bytes ${cfRange.start}-${cfRange.end}/${object.size}`);
         headers.set("Content-Length", String(cfRange.end - cfRange.start + 1));
