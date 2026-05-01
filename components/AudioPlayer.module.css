@@ -57,6 +57,115 @@
   font-variant-numeric: tabular-nums;
 }
 
+.playerControls {
+  display: grid;
+  gap: 12px;
+  padding: 20px;
+  border-radius: 24px;
+  border: 1px solid var(--border);
+  background: rgba(18, 26, 38, 0.8);
+}
+
+.timeRow {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.time {
+  color: var(--secondary);
+  font-size: 0.875rem;
+  font-variant-numeric: tabular-nums;
+  min-width: 40px;
+  font-family: var(--font-body);
+}
+
+.scrubberWrapper {
+  position: relative;
+  flex: 1;
+  height: 20px;
+  display: flex;
+  align-items: center;
+}
+
+.scrubberFill {
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  height: 4px;
+  background: var(--accent, #6366f1);
+  border-radius: 2px;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.scrubber {
+  position: relative;
+  width: 100%;
+  height: 4px;
+  appearance: none;
+  background: rgba(255, 255, 255, 0.12);
+  border-radius: 2px;
+  outline: none;
+  cursor: pointer;
+  z-index: 2;
+  /* Thumb - hidden, scrubber stays slim */
+  appearance: none;
+}
+
+.scrubber::-webkit-slider-thumb {
+  appearance: none;
+  width: 1px;
+  height: 1px;
+}
+
+.scrubber::-moz-range-thumb {
+  width: 1px;
+  height: 1px;
+  border: none;
+}
+
+.playButton {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background: var(--accent, #6366f1);
+  color: white;
+  border: none;
+  cursor: pointer;
+  margin: 0 auto;
+  transition: opacity 0.15s, transform 0.15s;
+}
+
+.playButton:hover {
+  opacity: 0.9;
+  transform: scale(1.04);
+}
+
+.playButton:active {
+  transform: scale(0.97);
+}
+
+.playButton svg {
+  display: block;
+}
+
+.statusRow {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  align-items: center;
+}
+
+.statusRow span {
+  color: var(--secondary);
+  font-variant-numeric: tabular-nums;
+}
+
 .actions {
   display: flex;
   gap: 12px;
@@ -65,6 +174,8 @@
 .error {
   margin: 0;
   color: #ffb4b4;
+  text-align: center;
+  font-size: 0.875rem;
 }
 
 @media (min-width: 960px) {
