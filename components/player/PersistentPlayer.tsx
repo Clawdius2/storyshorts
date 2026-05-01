@@ -200,8 +200,14 @@ export function PersistentPlayer() {
                 return;
               }
 
-              void audio.play().catch(() => {
-                setError("Playback requires a user interaction on this device.");
+              void audio.play().catch((err) => {
+                // NotAllowedError = browser autoplay policy blocked it
+                // This happens when AudioContext is still suspended (no user gesture yet)
+                if (err.name === "NotAllowedError" || err.name === "AbortError") {
+                  setError("Tap anywhere on the page once, then press Play.");
+                } else {
+                  setError("Audio playback failed. Please try again.");
+                }
               });
             }}
           >
