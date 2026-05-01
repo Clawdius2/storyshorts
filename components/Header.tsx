@@ -8,7 +8,7 @@ export function Header() {
     <header className={styles.header}>
       <div className={styles.inner}>
         <Link href="/" className={styles.brand}>
-          <Image src="/logo.png" alt="StoryShorts logo" width={40} height={40} className={styles.brandImage} />
+          <Image src="/logo.jpg" alt="StoryShorts logo" width={42} height={42} className={styles.brandImage} />
           <span>
             <strong>StoryShorts</strong>
             <small>cinematic audio fiction</small>
