@@ -2,7 +2,6 @@ import type { Metadata } from "next";
 import { ClerkProvider } from "@clerk/nextjs";
 import { Inter, Manrope } from "next/font/google";
 import { Header } from "@/components/Header";
-import { PersistentPlayer } from "@/components/player/PersistentPlayer";
 import { PlayerProvider } from "@/components/player/PlayerProvider";
 import "./globals.css";
 
@@ -35,7 +34,6 @@ export default function RootLayout({
               <Header />
               <main className="siteMain">{children}</main>
             </div>
-            <PersistentPlayer />
           </PlayerProvider>
         </body>
       </html>
