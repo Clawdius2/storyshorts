@@ -39,6 +39,13 @@
   letter-spacing: 0.14em;
 }
 
+.brandImage {
+  width: 42px;
+  height: 42px;
+  border-radius: 12px;
+  object-fit: contain;
+}
+
 .brandMark {
   width: 42px;
   height: 42px;
