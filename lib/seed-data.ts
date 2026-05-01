@@ -18,7 +18,7 @@ export const seedBooks: Prisma.BookCreateManyInput[] = [
   },
   {
     id: "free-gift-of-the-magi",
-    gutenbergId: "17257",
+    gutenbergId: "7256",
     title: "The Gift of the Magi",
     author: "O. Henry",
     narrator: "Clara Wren",
@@ -26,8 +26,8 @@ export const seedBooks: Prisma.BookCreateManyInput[] = [
     description:
       "Two lovers with very little money make impossible choices to buy each other the perfect Christmas gift.",
     durationSeconds: 314,
-    coverImageKey: "books/17257/audio/cover.jpg",
-    audioKey: "books/17257/audio/O._Henry.The_Gift_of_the_Magi.mp3",
+    coverImageKey: "books/7256/audio/cover.jpg",
+    audioKey: "books/7256/audio/O._Henry.The_Gift_of_the_Magi.mp3",
     isFree: true,
     status: "pending",
   },
