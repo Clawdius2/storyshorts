@@ -22,7 +22,15 @@ class AudioStreamer {
       const options = {};
 
       if (rangeHeader) {
-        options.range = rangeHeader;
+        // Parse "bytes=0-99" into { start: 0, end: 99 }
+        const rangeMatch = rangeHeader.match(/^bytes=(\d+)-(\d+)$/);
+        if (rangeMatch) {
+          options.range = {
+            start: parseInt(rangeMatch[1], 10),
+            end: parseInt(rangeMatch[2], 10),
+          };
+        }
+        // If malformed range, omit range param — R2 will return full object
       }
 
       const object = await env.AUDIO_BUCKET.get(key, options);
