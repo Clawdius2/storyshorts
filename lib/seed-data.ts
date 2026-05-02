@@ -89,7 +89,7 @@ export const seedBooks: Prisma.BookCreateManyInput[] = [
     coverImageKey: "books/1952/audio/cover.jpg",
     audioKey: "books/1952/audio/Charlotte_Perkins_Gilman.The_Yellow_Wallpaper.mp3",
     isFree: false,
-    status: "pending",
+    status: "ready",
   },
   {
     id: "premium-the-open-window",
@@ -123,7 +123,7 @@ export const seedBooks: Prisma.BookCreateManyInput[] = [
   },
   {
     id: "premium-occurrence-at-owl-creek",
-    gutenbergId: "33127",
+    gutenbergId: "375",
     title: "An Occurrence at Owl Creek Bridge",
     author: "Ambrose Bierce",
     narrator: "Simon Welles",
@@ -131,8 +131,8 @@ export const seedBooks: Prisma.BookCreateManyInput[] = [
     description:
       "A condemned man imagines one last impossible escape in the suspended instant before death.",
     durationSeconds: 1188,
-    coverImageKey: "books/33127/audio/cover.jpg",
-    audioKey: "books/33127/audio/Ambrose_Bierce.An_Occurrence_at_Owl_Creek_Bridge.mp3",
+    coverImageKey: "books/375/audio/cover.jpg",
+    audioKey: "books/375/audio/Ambrose_Bierce.An_Occurrence_at_Owl_Creek_Bridge.mp3",
     isFree: false,
     status: "pending",
   },
