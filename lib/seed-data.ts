@@ -39,10 +39,10 @@ export const seedBooks: Prisma.BookCreateManyInput[] = [
     narrator: "Juliette Vale",
     genre: "Realism",
     description:
-      "A borrowed diamond necklace opens the door to one glamorous night and a decade of ruin.",
-    durationSeconds: 338,
+      "A borrowed diamond necklace opens the door to one glamorous night and a decade of ruin. With cold precision, Maupassant dissects vanity, longing, and the quiet cruelty of circumstance — a masterpiece of ironic Realism.",
+    durationSeconds: 6975,
     coverImageKey: "books/19555/audio/cover.jpg",
-    audioKey: "books/19555/audio/Guy_de_Maupassant.The_Necklace.mp3",
+    audioKey: "books/19555/audio/Guy_de_Maupassant.The_Diamond_Necklace.mp3",
     isFree: true,
     status: "pending",
   },
