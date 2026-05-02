@@ -44,7 +44,7 @@ export const seedBooks: Prisma.BookCreateManyInput[] = [
     coverImageKey: "books/19555/audio/cover.jpg",
     audioKey: "books/19555/audio/Guy_de_Maupassant.The_Diamond_Necklace.mp3",
     isFree: true,
-    status: "pending",
+    status: "ready",
   },
   {
     id: "free-the-monkeys-paw",
