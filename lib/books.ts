@@ -43,7 +43,8 @@ export async function getFreeShelfBooks() {
 
 export async function getFeaturedCatalogBooks() {
   return prisma.book.findMany({
-    orderBy: [{ isFree: "desc" }, { title: "asc" }],
+    where: { isFree: false, status: "ready" },
+    orderBy: { title: "asc" },
     take: 6,
   });
 }
