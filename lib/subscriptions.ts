@@ -24,13 +24,13 @@ export async function getOrCreateUser(clerkUserId: string) {
   });
 }
 
-// TODO (restore payment): Remove NEXT_PUBLIC_PAYWALL_ENABLED check and restore DB lookup
+// TODO (restore payment): Set NEXT_PUBLIC_PAYWALL_ENABLED=disabled in Vercel project settings
+// then delete this early-return and restore the DB lookup below.
 export async function hasActiveSubscription(clerkUserId: string | null) {
-  // Paywall disabled for testing — only disable when explicitly set to "disabled"
-  if (process.env.NEXT_PUBLIC_PAYWALL_ENABLED === "disabled") {
-    return true;
-  }
+  // Paywall DISABLED for testing — all books unlocked
+  return true;
 
+  /* — restore from here —
   if (!clerkUserId) {
     return false;
   }
@@ -42,6 +42,7 @@ export async function hasActiveSubscription(clerkUserId: string | null) {
   }
 
   return ACTIVE_SUBSCRIPTION_STATUSES.has(user.subscription.status);
+  — restore to here — */
 }
 
 export async function getSubscriptionByStripeCustomerId(stripeCustomerId: string) {
