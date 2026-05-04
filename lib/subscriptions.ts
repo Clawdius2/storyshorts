@@ -26,8 +26,8 @@ export async function getOrCreateUser(clerkUserId: string) {
 
 // TODO (restore payment): Remove NEXT_PUBLIC_PAYWALL_ENABLED check and restore DB lookup
 export async function hasActiveSubscription(clerkUserId: string | null) {
-  // Paywall disabled for testing — always return true
-  if (process.env.NEXT_PUBLIC_PAYWALL_ENABLED !== "true") {
+  // Paywall disabled for testing — only disable when explicitly set to "disabled"
+  if (process.env.NEXT_PUBLIC_PAYWALL_ENABLED === "disabled") {
     return true;
   }
 
