@@ -107,21 +107,6 @@ export const seedBooks: Prisma.BookCreateManyInput[] = [
     status: "pending",
   },
   {
-    id: "premium-a-sound-of-thunder",
-    gutenbergId: "24977",
-    title: "A Sound of Thunder",
-    author: "Ray Bradbury",
-    narrator: "Gideon Hale",
-    genre: "Speculative Fiction",
-    description:
-      "A safari into the age of dinosaurs turns catastrophic when one traveler forgets how fragile the future really is.",
-    durationSeconds: 1645,
-    coverImageKey: "books/24977/audio/cover.jpg",
-    audioKey: "books/24977/audio/Ray_Bradbury.A_Sound_of_Thunder.mp3",
-    isFree: false,
-    status: "pending",
-  },
-  {
     id: "premium-occurrence-at-owl-creek",
     gutenbergId: "375",
     title: "An Occurrence at Owl Creek Bridge",
@@ -141,7 +126,7 @@ export const seedBooks: Prisma.BookCreateManyInput[] = [
     gutenbergId: "47394",
     title: "The Machine Stops",
     author: "E.M. Forster",
-    narrator: "Julian Stokes",
+    narrator: "Silas Vale",
     genre: "Sci-Fi",
     description:
       "In a world where every need is handled by a global machine, one son insists that humanity cannot remain underground forever.",
