@@ -17,7 +17,7 @@ const bodyFont = Inter({
 
 export const metadata: Metadata = {
   title: "StoryShorts",
-  description: "Cinematic short-story audio streaming.",
+  description: "Great stories. Anytime. Anywhere.",
 };
 
 export default function RootLayout({

@@ -1,0 +1,136 @@
+.card {
+  display: grid;
+  gap: 20px;
+  background: var(--card-elevated);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-card);
+  box-shadow: var(--shadow-card), 0 0 60px var(--highlight-dim);
+  overflow: hidden;
+  position: relative;
+}
+
+/* ─── Cover ─────────────────────────── */
+.cover {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 3 / 2;
+  overflow: hidden;
+}
+
+.coverImg {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 0;
+}
+
+.coverFallback {
+  width: 100%;
+  height: 100%;
+  background:
+    radial-gradient(circle at top, rgba(139, 92, 246, 0.3), transparent 40%),
+    linear-gradient(180deg, var(--surface), var(--background));
+  display: grid;
+  place-items: center;
+}
+
+.coverFallback span {
+  font-family: var(--font-heading), system-ui, sans-serif;
+  font-size: 3rem;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  color: var(--accent);
+}
+
+.coverOverlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to bottom,
+    transparent 40%,
+    rgba(17, 24, 39, 0.8) 100%
+  );
+}
+
+/* ─── Body ──────────────────────────── */
+.body {
+  display: grid;
+  gap: 12px;
+  padding: 0 24px 24px;
+}
+
+.meta {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  color: var(--secondary);
+  font-size: 0.78rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+}
+
+.genre {
+  color: var(--accent);
+  font-weight: 600;
+}
+
+.duration {
+  color: var(--muted);
+}
+
+.title {
+  font-size: 1.5rem;
+  font-weight: 700;
+  line-height: 1.2;
+  color: var(--text);
+}
+
+.author {
+  color: var(--secondary);
+  font-size: 0.88rem;
+  margin-top: -6px;
+}
+
+.narrator {
+  color: var(--muted);
+  font-size: 0.8rem;
+  margin-top: -4px;
+}
+
+.actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-top: 4px;
+}
+
+.actions .buttonPrimary {
+  gap: 8px;
+  min-height: 44px;
+  padding: 0 20px;
+}
+
+@media (min-width: 900px) {
+  .card {
+    grid-template-columns: 1fr 1fr;
+    gap: 0;
+  }
+
+  .cover {
+    aspect-ratio: unset;
+    min-height: 320px;
+  }
+
+  .coverOverlay {
+    background: linear-gradient(
+      to right,
+      transparent 50%,
+      rgba(22, 29, 46, 0.6) 100%
+    );
+  }
+
+  .body {
+    padding: 32px 28px;
+    align-content: center;
+  }
+}

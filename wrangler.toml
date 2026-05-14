@@ -4,7 +4,7 @@ compatibility_date = "2024-04-19"
 
 [vars]
 R2_ACCOUNT_ID = "dfd11ff2f8b18eab632465275938c6ac"
-R2_BUCKET = "shortshorts-audio-prod"
+R2_BUCKET = "storyshorts-assets"
 
 # CF_API_TOKEN is set as a secret via:
 # wrangler secret put CF_API_TOKEN --name audio-streamer

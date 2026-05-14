@@ -8,16 +8,14 @@ export function Header() {
     <header className={styles.header}>
       <div className={styles.inner}>
         <Link href="/" className={styles.brand}>
-          <Image src="/logo.jpg" alt="StoryShorts logo" width={42} height={42} className={styles.brandImage} />
-          <span>
-            <strong>StoryShorts</strong>
-            <small>cinematic audio fiction</small>
-          </span>
+          <Image src="/logo.jpg" alt="StoryShorts" width={40} height={40} className={styles.brandImage} />
+          <strong className={styles.brandName}>StoryShorts</strong>
         </Link>
 
         <nav className={styles.nav}>
-          <Link href="/catalog">Catalog</Link>
-          <Link href="/subscribe">Subscribe</Link>
+          <Link href="/catalog" className={styles.navLink}>
+            Browse
+          </Link>
         </nav>
 
         <div className={styles.actions}>

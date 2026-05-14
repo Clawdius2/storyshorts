@@ -12,40 +12,64 @@ export default async function SubscribePage() {
 
   return (
     <div className={styles.page}>
-      <section className={styles.card}>
-        <p className="eyebrow">Membership</p>
-        <h1>Unlock the full StoryShorts catalog for $7.95/month.</h1>
+      <section className={styles.hero}>
+        <p className="eyebrow">Pricing</p>
+        <h1 className={styles.heading}>
+          Great stories. <br />$0.99 at a time.
+        </h1>
         <p className={styles.copy}>
-          Unlimited streaming, persistent resume points, and immediate access to every premium
-          story in the library.
+          No subscription required. Pick a title, pay once, listen forever. Every story is
+          premium-narrated and ready to stream instantly.
         </p>
-        <div className={styles.benefits}>
-          <div>
-            <strong>Full-catalog streaming</strong>
-            <p>Listen to every premium title from any device.</p>
+      </section>
+
+      <section className={styles.tiers}>
+        <div className={styles.tier}>
+          <div className={styles.tierHeader}>
+            <strong>Free titles</strong>
+            <span className={styles.tierPrice}>$0</span>
           </div>
-          <div>
-            <strong>Saved progress</strong>
-            <p>Resume exactly where you stopped across sessions.</p>
-          </div>
-          <div>
-            <strong>Free shelf included</strong>
-            <p>Five stories remain open to everyone, anytime.</p>
-          </div>
+          <p className={styles.tierDesc}>
+            Start with classics from the public domain. No account, no credit card — just tap
+            and listen.
+          </p>
+          <Link href="/catalog" className="buttonSecondary">
+            Browse free titles
+          </Link>
         </div>
-        <div className={styles.actions}>
+
+        <div className={`${styles.tier} ${styles.tierHighlight}`}>
+          <div className={styles.tierBadge}>Most popular</div>
+          <div className={styles.tierHeader}>
+            <strong>Premium titles</strong>
+            <span className={styles.tierPrice}>$0.99</span>
+          </div>
+          <p className={styles.tierDesc}>
+            Full access to the entire StoryShorts catalog. One-time purchase per title, yours
+            to keep streaming.
+          </p>
           {subscribed ? (
             <Link href="/catalog" className="buttonPrimary">
-              You already have access
+              You have access — browse catalog
             </Link>
           ) : userId ? (
             <SubscribeButton />
           ) : (
-            <Link href="/sign-in" className="buttonPrimary">
-              Sign in to subscribe
+            <Link href="/sign-in?redirect_url=/subscribe" className="buttonPrimary">
+              Sign in to purchase
             </Link>
           )}
         </div>
+      </section>
+
+      <section className={styles.note}>
+        <p>
+          All purchases are permanent. A subscription is not required to enjoy StoryShorts —
+          browse the catalog, pick what speaks to you, and unlock it for less than a dollar.
+        </p>
+        <Link href="/catalog" className="buttonGhost">
+          Browse the catalog
+        </Link>
       </section>
     </div>
   );

@@ -27,12 +27,12 @@ export default async function CatalogPage({
     <div className={styles.page}>
       <section className={styles.hero}>
         <div>
-          <p className="eyebrow">Catalog</p>
-          <h1>Browse the full StoryShorts library.</h1>
+          <p className="eyebrow">Library</p>
+          <h1>Browse by genre, discover by mood.</h1>
         </div>
         <p className={styles.copy}>
-          Search by title, author, or narrator. Free titles are marked clearly, while premium
-          stories unlock with an active membership.
+          Every title is clearly marked — free to stream, or $0.99 to unlock. No subscriptions,
+          no surprises. Pick what sounds good and start listening.
         </p>
       </section>
 

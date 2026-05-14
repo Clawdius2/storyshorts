@@ -1,97 +1,88 @@
+/* ─── Hero ────────────────────────────────────── */
 .hero {
   display: grid;
-  gap: 18px;
-}
-
-.heroCard,
-.heroStats,
-.previewSection {
-  padding: 24px;
-  background: rgba(18, 26, 38, 0.86);
-  border: 1px solid var(--border);
-  border-radius: 28px;
-  box-shadow: var(--shadow);
-}
-
-.heroCard {
-  display: grid;
-  gap: 18px;
+  gap: 20px;
+  align-items: stretch;
 }
 
 .heroCopy {
+  display: grid;
+  gap: 18px;
+  padding: 32px 28px;
+  background: var(--card);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-card);
+  box-shadow: var(--shadow-card);
+}
+
+.heroHeading {
+  font-size: clamp(2rem, 6vw, 3.2rem);
+  font-weight: 800;
+  line-height: 1.1;
+  color: var(--text);
+  letter-spacing: -0.02em;
+}
+
+.heroBody {
   margin: 0;
-  max-width: 42rem;
+  max-width: 44rem;
   color: var(--secondary);
-  line-height: 1.8;
+  line-height: 1.75;
+  font-size: 0.95rem;
 }
 
 .heroActions {
   display: flex;
   flex-wrap: wrap;
   gap: 12px;
+  margin-top: 4px;
 }
 
-.heroStats {
-  display: grid;
-  gap: 12px;
-}
-
-.statCard {
-  padding: 18px;
-  border-radius: 22px;
-  background: rgba(255, 255, 255, 0.03);
-  border: 1px solid rgba(255, 255, 255, 0.05);
-}
-
-.statCard span {
-  display: block;
-  margin-bottom: 8px;
-  color: var(--secondary);
-  text-transform: uppercase;
-  letter-spacing: 0.08em;
-  font-size: 0.78rem;
-}
-
-.statCard strong {
-  font-family: var(--font-heading), sans-serif;
-  font-size: 1rem;
-}
-
-.previewSection {
-  display: grid;
-  gap: 20px;
-}
-
-.sectionHeading {
+/* ─── Feature icons ─────────────────────────── */
+.featureIcons {
   display: flex;
   flex-wrap: wrap;
-  justify-content: space-between;
-  gap: 16px;
-  align-items: end;
+  gap: 12px;
+  margin-top: 8px;
 }
 
-.grid {
+.featureIcon {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 7px 14px;
+  border-radius: var(--radius-chip);
+  background: var(--highlight-dim);
+  border: 1px solid rgba(245, 158, 11, 0.15);
+  color: var(--secondary);
+  font-size: 0.78rem;
+  font-weight: 500;
+}
+
+.featureIcon span:first-child {
+  font-size: 0.7rem;
+  color: var(--highlight);
+}
+
+/* ─── Sections ────────────────────────────────── */
+.section {
   display: grid;
-  gap: 16px;
+  gap: 18px;
 }
 
+/* ─── Responsive ─────────────────────────────── */
 @media (min-width: 900px) {
   .hero {
-    grid-template-columns: minmax(0, 1.35fr) minmax(320px, 0.8fr);
+    grid-template-columns: minmax(0, 1.2fr) minmax(360px, 0.85fr);
+    gap: 24px;
   }
 
-  .heroCard {
-    padding: 48px;
+  .heroCopy {
+    padding: 48px 44px;
+    gap: 20px;
   }
 
-  .heroStats,
-  .previewSection {
-    padding: 28px;
-  }
-}
-
-@media (min-width: 1120px) {
-  .grid {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
+  .featureIcons {
+    gap: 16px;
   }
 }

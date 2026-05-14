@@ -36,7 +36,7 @@ HUME_SECRET_KEY = os.environ.get("HUME_SECRET_KEY", "xiApNeHzWFdqsSooyA3O4WyPDiG
 HUME_BASE_URL = "https://api.hume.ai/v0/tts/stream/json"
 
 R2_ACCOUNT_ID = os.environ.get("R2_ACCOUNT_ID", "dfd11ff2f8b18eab632465275938c6ac")
-R2_BUCKET = os.environ.get("R2_BUCKET", "shortshorts-audio-prod")
+R2_BUCKET = os.environ.get("R2_BUCKET", "storyshorts-assets")
 R2_API_TOKEN = os.environ.get("CF_API_TOKEN", "")  # Set via `wrangler secret put CF_API_TOKEN`
 
 # Default voice

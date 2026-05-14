@@ -1,49 +1,85 @@
 .card {
   display: grid;
-  gap: 16px;
+  gap: 14px;
   padding: 16px;
-  background: rgba(18, 26, 38, 0.88);
-  border: 1px solid var(--border);
-  border-radius: 26px;
-  box-shadow: var(--shadow);
+  background: var(--card);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-card);
+  box-shadow: var(--shadow-card);
+  transition: box-shadow 160ms ease, border-color 160ms ease, transform 160ms ease;
+}
+
+.card:hover {
+  border-color: var(--border);
+  box-shadow: var(--shadow-card), 0 4px 24px rgba(139, 92, 246, 0.12);
+  transform: translateY(-2px);
 }
 
 .coverLink {
   display: block;
+  border-radius: 16px;
+  overflow: hidden;
 }
 
 .body {
   display: grid;
-  gap: 14px;
+  gap: 12px;
 }
 
 .metaRow {
   display: flex;
   justify-content: space-between;
-  gap: 12px;
-  color: var(--secondary);
-  font-size: 0.84rem;
+  align-items: center;
+  gap: 8px;
+}
+
+.genre {
+  color: var(--accent);
+  font-size: 0.72rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+}
+
+.duration {
+  color: var(--muted);
+  font-size: 0.72rem;
   text-transform: uppercase;
   letter-spacing: 0.08em;
 }
 
 .copy {
   display: grid;
-  gap: 10px;
+  gap: 6px;
 }
 
 .copy h3 {
-  font-size: 1.3rem;
+  font-size: 1.15rem;
+  font-weight: 700;
+  line-height: 1.25;
 }
 
-.byline,
+.copy h3 a {
+  color: var(--text);
+  transition: color 140ms ease;
+}
+
+.copy h3 a:hover {
+  color: var(--accent-hover);
+}
+
+.byline {
+  margin: 0;
+  color: var(--muted);
+  font-size: 0.8rem;
+  line-height: 1.4;
+}
+
 .description {
   margin: 0;
   color: var(--secondary);
+  font-size: 0.84rem;
   line-height: 1.6;
-}
-
-.description {
   display: -webkit-box;
   -webkit-line-clamp: 3;
   -webkit-box-orient: vertical;
@@ -54,12 +90,12 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  gap: 12px;
+  gap: 10px;
+  margin-top: 4px;
 }
 
-.freeBadge {
-  color: var(--highlight);
-  text-transform: uppercase;
-  letter-spacing: 0.12em;
-  font-size: 0.76rem;
+.footer .buttonSecondary {
+  min-height: 38px;
+  padding: 0 16px;
+  font-size: 0.82rem;
 }

@@ -54,7 +54,7 @@ export function SubscribeButton() {
   return (
     <div>
       <button type="button" className="buttonPrimary" disabled={isPending} onClick={handleClick}>
-        {isPending ? "Redirecting..." : "Subscribe for $7.95/month"}
+        {isPending ? "Redirecting..." : "Browse the catalog"}
       </button>
       {error ? <p style={{ color: "#ffb4b4", marginTop: 12 }}>{error}</p> : null}
     </div>

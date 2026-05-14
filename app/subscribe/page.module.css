@@ -1,53 +1,125 @@
 .page {
   display: grid;
+  gap: 24px;
 }
 
-.card {
+.hero {
   display: grid;
-  gap: 18px;
-  padding: 24px;
-  background: rgba(18, 26, 38, 0.88);
-  border: 1px solid var(--border);
-  border-radius: 28px;
-  box-shadow: var(--shadow);
+  gap: 14px;
+  padding: 32px 28px;
+  background: var(--card);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-card);
+  box-shadow: var(--shadow-card);
+}
+
+.heading {
+  font-size: clamp(2rem, 6vw, 3rem);
+  font-weight: 800;
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+  color: var(--text);
 }
 
 .copy {
   margin: 0;
+  max-width: 44rem;
   color: var(--secondary);
-  line-height: 1.8;
-  max-width: 42rem;
+  line-height: 1.75;
+  font-size: 0.95rem;
 }
 
-.benefits {
+.tiers {
   display: grid;
-  gap: 12px;
+  gap: 18px;
 }
 
-.benefits div {
-  padding: 18px;
-  border-radius: 22px;
-  background: rgba(255, 255, 255, 0.03);
+.tier {
+  display: grid;
+  gap: 16px;
+  padding: 28px 24px;
+  background: var(--card);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-card);
+  box-shadow: var(--shadow-card);
 }
 
-.benefits p {
-  margin: 8px 0 0;
-  color: var(--secondary);
-  line-height: 1.7;
+.tierHighlight {
+  border-color: var(--accent);
+  box-shadow: var(--shadow-card), 0 0 40px var(--accent-dim);
+  position: relative;
 }
 
-.actions {
+.tierBadge {
+  display: inline-flex;
+  align-self: flex-start;
+  padding: 4px 12px;
+  border-radius: var(--radius-chip);
+  background: var(--accent-dim);
+  border: 1px solid rgba(139, 92, 246, 0.3);
+  color: var(--accent-hover);
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+}
+
+.tierHeader {
   display: flex;
-  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: baseline;
   gap: 12px;
 }
 
-@media (min-width: 900px) {
-  .card {
-    padding: 36px;
+.tierHeader strong {
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: var(--text);
+}
+
+.tierPrice {
+  font-size: 1.5rem;
+  font-weight: 800;
+  font-family: var(--font-heading), system-ui, sans-serif;
+  color: var(--accent);
+}
+
+.tierDesc {
+  margin: 0;
+  color: var(--secondary);
+  font-size: 0.88rem;
+  line-height: 1.65;
+}
+
+.note {
+  display: grid;
+  gap: 16px;
+  padding: 24px 28px;
+  background: var(--card);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-card);
+  box-shadow: var(--shadow-card);
+}
+
+.note p {
+  margin: 0;
+  color: var(--muted);
+  font-size: 0.88rem;
+  line-height: 1.65;
+  max-width: 50rem;
+}
+
+@media (min-width: 820px) {
+  .tiers {
+    grid-template-columns: repeat(2, 1fr);
+    align-items: start;
   }
 
-  .benefits {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
+  .hero {
+    padding: 48px 44px;
+  }
+
+  .tier {
+    padding: 32px 28px;
   }
 }

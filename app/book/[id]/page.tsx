@@ -1,5 +1,6 @@
 import { auth } from "@clerk/nextjs/server";
 import { notFound } from "next/navigation";
+import Link from "next/link";
 import { CoverArt } from "@/components/CoverArt";
 import { StreamButton } from "@/components/StreamButton";
 import { buildCoverUrl } from "@/lib/audio";
@@ -38,21 +39,31 @@ export default async function BookDetailPage({
           src={buildCoverUrl(book.coverImageKey)}
           title={book.title}
         />
+        <div className={styles.priceTag}>
+          {book.isFree ? (
+            <span className="badge badgeFree">Free</span>
+          ) : (
+            <span className="badge badgePrice">$0.99</span>
+          )}
+        </div>
       </div>
 
       <div className={styles.body}>
-        <p className="eyebrow">{book.isFree ? "Free shelf" : "Catalog title"}</p>
+        <p className="eyebrow">{book.genre}</p>
         <h1>{book.title}</h1>
         <p className={styles.byline}>
           {book.author} · Narrated by {book.narrator}
         </p>
         <div className={styles.tagRow}>
-          {splitGenres(book.genre).map((genre) => (
-            <span key={genre}>{genre}</span>
+          {splitGenres(book.genre).map((g) => (
+            <Link key={g} href={`/catalog?genre=${encodeURIComponent(g)}`} className="genreChip">
+              {g}
+            </Link>
           ))}
-          <span>{formatDuration(book.durationSeconds)}</span>
+          <span className={styles.duration}>{formatDuration(book.durationSeconds)}</span>
         </div>
         <p className={styles.synopsis}>{book.description}</p>
+
         <div className={styles.actions}>
           <StreamButton
             bookId={book.id}
@@ -63,11 +74,14 @@ export default async function BookDetailPage({
 
         {!canAccess ? (
           <div className={styles.lockedCard}>
-            <strong>Unlock the full catalog</strong>
+            <strong>Want to unlock this title?</strong>
             <p>
-              Membership gives you unlimited streaming, persistent resume points, and access to
-              every premium StoryShorts title.
+              Browse the catalog, pick your stories, and listen for $0.99 each. No subscription
+              required.
             </p>
+            <Link href="/catalog" className="buttonSecondary">
+              Browse catalog
+            </Link>
           </div>
         ) : null}
       </div>

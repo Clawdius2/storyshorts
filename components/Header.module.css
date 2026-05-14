@@ -2,9 +2,11 @@
   position: sticky;
   top: 0;
   z-index: 30;
-  padding: 16px;
-  background: linear-gradient(180deg, rgba(11, 16, 24, 0.92), rgba(11, 16, 24, 0.55));
-  backdrop-filter: blur(18px);
+  padding: 14px 20px;
+  background: linear-gradient(180deg, rgba(5, 6, 14, 0.96), rgba(5, 6, 14, 0.7));
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-bottom: 1px solid var(--border-subtle);
 }
 
 .inner {
@@ -12,73 +14,67 @@
   margin: 0 auto;
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 16px;
   justify-content: space-between;
 }
 
 .brand {
   display: inline-flex;
   align-items: center;
-  gap: 12px;
+  gap: 10px;
   min-width: 0;
+  transition: opacity 140ms ease;
 }
 
-.brand span:last-child {
-  display: grid;
-}
-
-.brand strong {
-  font-family: var(--font-heading), sans-serif;
-  font-size: 1rem;
-}
-
-.brand small {
-  color: var(--secondary);
-  font-size: 0.7rem;
-  text-transform: uppercase;
-  letter-spacing: 0.14em;
+.brand:hover {
+  opacity: 0.85;
 }
 
 .brandImage {
-  width: 42px;
-  height: 42px;
+  width: 40px;
+  height: 40px;
   border-radius: 12px;
   object-fit: contain;
+  flex-shrink: 0;
 }
 
-.brandMark {
-  width: 42px;
-  height: 42px;
-  border-radius: 14px;
-  background: linear-gradient(135deg, rgba(74, 144, 226, 0.9), rgba(227, 179, 65, 0.42));
-  color: #fff;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  font-family: var(--font-heading), sans-serif;
-  letter-spacing: 0.08em;
+.brandName {
+  font-family: var(--font-heading), system-ui, sans-serif;
+  font-size: 1.05rem;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  color: var(--text);
 }
 
 .nav {
   display: none;
   align-items: center;
-  gap: 22px;
-  color: var(--secondary);
+  gap: 4px;
 }
 
-.nav a:hover {
+.navLink {
+  padding: 8px 14px;
+  border-radius: var(--radius-chip);
+  color: var(--secondary);
+  font-size: 0.88rem;
+  font-weight: 500;
+  transition: color 140ms ease, background-color 140ms ease;
+}
+
+.navLink:hover {
   color: var(--text);
+  background: var(--accent-dim);
 }
 
 .actions {
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 8px;
 }
 
 @media (min-width: 820px) {
   .header {
-    padding: 18px 24px;
+    padding: 16px 28px;
   }
 
   .nav {

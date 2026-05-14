@@ -31,7 +31,7 @@ export function GenreFilter({ activeGenre = "All", genres, query }: GenreFilterP
         <Link
           key={genre}
           href={createHref(genre, query)}
-          className={`${styles.chip} ${genre === activeGenre ? styles.active : ""}`}
+          className={`genreChip ${genre === activeGenre ? "active" : ""}`}
         >
           {genre}
         </Link>

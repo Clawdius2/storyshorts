@@ -24,22 +24,26 @@ export function BookCard({ book, hasSubscription }: BookCardProps) {
       </Link>
       <div className={styles.body}>
         <div className={styles.metaRow}>
-          <span>{book.genre}</span>
-          <span>{formatDuration(book.durationSeconds)}</span>
+          <span className={styles.genre}>{book.genre}</span>
+          <span className={styles.duration}>{formatDuration(book.durationSeconds)}</span>
         </div>
         <div className={styles.copy}>
           <h3>
             <Link href={`/book/${book.id}`}>{book.title}</Link>
           </h3>
           <p className={styles.byline}>
-            {book.author} · Narrated by {book.narrator}
+            {book.author} · {book.narrator}
           </p>
           <p className={styles.description}>{book.description}</p>
         </div>
         <div className={styles.footer}>
-          {book.isFree ? <span className={styles.freeBadge}>Free</span> : null}
+          {book.isFree ? (
+            <span className="badge badgeFree">Free</span>
+          ) : (
+            <span className="badge badgePrice">$0.99</span>
+          )}
           <Link href={`/book/${book.id}`} className="buttonSecondary">
-            {canAccess ? "Open title" : "Subscribe to unlock"}
+            {canAccess ? "Listen" : "Unlock"}
           </Link>
         </div>
       </div>

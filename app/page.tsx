@@ -1,7 +1,9 @@
 import Link from "next/link";
 import { auth } from "@clerk/nextjs/server";
 import { BookCard } from "@/components/BookCard";
-import { FreeShelf } from "@/components/FreeShelf";
+import { FeaturedPlayerCard } from "@/components/FeaturedPlayerCard";
+import { GenreRow } from "@/components/GenreRow";
+import { ValueStrip } from "@/components/ValueStrip";
 import { getFeaturedCatalogBooks, getFreeShelfBooks } from "@/lib/books";
 import { hasActiveSubscription } from "@/lib/subscriptions";
 import styles from "./home.module.css";
@@ -16,61 +18,101 @@ export default async function HomePage() {
     hasActiveSubscription(userId),
   ]);
 
+  // Use the first featured book as the hero card
+  const heroBook = featuredBooks[0] ?? null;
+  // Remaining featured books for the grid
+  const gridBooks = featuredBooks.slice(1, 7);
+
   return (
     <div className="pageWrap">
+      {/* ─── Hero ─────────────────────────────────────── */}
       <section className={styles.hero}>
-        <div className={styles.heroCard}>
-          <p className="eyebrow">Nocturnal fiction for one sitting</p>
-          <h1>Short stories, premium narration, and a player built to resume instantly.</h1>
-          <p className={styles.heroCopy}>
-            StoryShorts is a modern listening library for people who want literary depth without
-            committing to a twelve-hour audiobook. Start with the free shelf, then unlock the full
-            catalog for $7.95 per month.
+        {/* Left: copy + CTA */}
+        <div className={styles.heroCopy}>
+          <p className="eyebrow">Great stories. Anytime. Anywhere.</p>
+          <h1 className={styles.heroHeading}>
+            Cinematic audio fiction for the modern listener.
+          </h1>
+          <p className={styles.heroBody}>
+            StoryShorts brings premium-narrated short stories to your ears — no subscription required
+            for the free shelf, $0.99 per title for everyone else. Discover by genre, stream
+            instantly, resume anywhere.
           </p>
           <div className={styles.heroActions}>
             <Link href="/catalog" className="buttonPrimary">
               Browse the catalog
             </Link>
-            <Link href="/subscribe" className="buttonSecondary">
-              View membership
+            <Link href="/catalog?genre=Mystery" className="buttonGhost">
+              Explore Mystery
             </Link>
           </div>
+
+          {/* Feature icons */}
+          <div className={styles.featureIcons}>
+            <div className={styles.featureIcon}>
+              <span>▶</span>
+              <span>Instant streaming</span>
+            </div>
+            <div className={styles.featureIcon}>
+              <span>✦</span>
+              <span>Premium voices</span>
+            </div>
+            <div className={styles.featureIcon}>
+              <span>★</span>
+              <span>Resume anywhere</span>
+            </div>
+          </div>
         </div>
-        <div className={styles.heroStats}>
-          <div className={styles.statCard}>
-            <span>Free stories</span>
-            <strong>5 classics available without a subscription</strong>
-          </div>
-          <div className={styles.statCard}>
-            <span>Persistent listening</span>
-            <strong>Your progress follows you across sessions and devices</strong>
-          </div>
-          <div className={styles.statCard}>
-            <span>Premium access</span>
-            <strong>Unlimited full-catalog streaming for active members</strong>
-          </div>
-        </div>
+
+        {/* Right: featured player card */}
+        {heroBook && <FeaturedPlayerCard book={heroBook} />}
       </section>
 
-      <FreeShelf books={freeShelfBooks} hasSubscription={subscribed} />
+      {/* ─── Browse by Genre ───────────────────────────── */}
+      <GenreRow />
 
-      <section className={styles.previewSection}>
-        <div className={styles.sectionHeading}>
-          <div>
-            <p className="eyebrow">Catalog preview</p>
-            <h2>Subscriber titles waiting beyond the free shelf.</h2>
+      {/* ─── Free shelf ──────────────────────────────── */}
+      {freeShelfBooks.length > 0 && (
+        <section className={styles.section}>
+          <div className="sectionHeading">
+            <div>
+              <p className="eyebrow">Free titles</p>
+              <h2>Start here — no account needed.</h2>
+            </div>
+            <Link href="/catalog?isFree=true" className="buttonGhost">
+              View all free
+            </Link>
           </div>
-          <Link href="/catalog" className="buttonGhost">
-            View full catalog
-          </Link>
-        </div>
+          <div className="grid3">
+            {freeShelfBooks.map((book) => (
+              <BookCard key={book.id} book={book} hasSubscription={subscribed} />
+            ))}
+          </div>
+        </section>
+      )}
 
-        <div className={styles.grid}>
-          {featuredBooks.map((book) => (
-            <BookCard key={book.id} book={book} hasSubscription={subscribed} />
-          ))}
-        </div>
-      </section>
+      {/* ─── Popular / featured row ───────────────────── */}
+      {gridBooks.length > 0 && (
+        <section className={styles.section}>
+          <div className="sectionHeading">
+            <div>
+              <p className="eyebrow">Featured</p>
+              <h2>Popular titles to explore.</h2>
+            </div>
+            <Link href="/catalog" className="buttonGhost">
+              Full catalog
+            </Link>
+          </div>
+          <div className="grid3">
+            {gridBooks.map((book) => (
+              <BookCard key={book.id} book={book} hasSubscription={subscribed} />
+            ))}
+          </div>
+        </section>
+      )}
+
+      {/* ─── Value strip ──────────────────────────────── */}
+      <ValueStrip />
     </div>
   );
 }
